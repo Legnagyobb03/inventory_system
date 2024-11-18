@@ -4,7 +4,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const protectedRoute = require('./routes/protectedRoute');
 const userRoutes = require('./routes/users');
-const itemRoutes = require('./routes/items');
+const itemsRoutes = require('./routes/items');
 const mongoose = require('mongoose');
 
 
@@ -21,12 +21,9 @@ mongoose.connect(uri)
 app.use('/api/auth', authRoutes);
 app.use('/api/main', protectedRoute);
 app.use('/api/users', userRoutes);
-app.use('/api/items', itemRoutes);
+app.use('/api/items', itemsRoutes);
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send({ error: err.message });
-});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
