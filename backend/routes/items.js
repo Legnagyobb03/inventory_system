@@ -4,15 +4,15 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-      const items = await Item.find();
-      res.json(items || []);
+    const items = await Item.find();
+    res.json(items || []);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    console.error('Error fetching items:', error);
+    res.status(500).json({ error: 'Failed to fetch items' });
   }
 });
 
 router.post('/', async (req, res) => {
-  console.log('POST /api/items', req.body); // Debugging log
   try {
     const { name, description, quantity, location } = req.body;
     if (!name || !quantity) {
@@ -20,12 +20,12 @@ router.post('/', async (req, res) => {
     }
 
     const item = new Item({ name, description, quantity, location });
-    await item.save();
-    console.log('Item saved:', item); // Debugging log
-    res.status(201).json(item);
+    const savedItem = await item.save();
+    console.log('Item saved:', savedItem);
+    res.status(201).json(savedItem);
   } catch (error) {
-    console.error('Error saving item:', error.message); // Debugging log
-    res.status(400).json({ error: error.message });
+    console.error('Error saving item:', error);
+    res.status(500).json({ error: 'Failed to create item' });
   }
 });
 
@@ -40,7 +40,7 @@ router.put('/:id', async (req, res) => {
     const item = await Item.findByIdAndUpdate(
       req.params.id,
       { name, description, quantity, location },
-      { new: true } // Return the updated document
+      { new: true, runValidators: true }
     );
 
     if (!item) {
@@ -49,8 +49,8 @@ router.put('/:id', async (req, res) => {
 
     res.json(item);
   } catch (error) {
-    console.error('Error updating item:', error.message); // Debugging log
-    res.status(400).json({ error: error.message });
+    console.error('Error updating item:', error);
+    res.status(500).json({ error: 'Failed to update item' });
   }
 });
 
@@ -66,9 +66,9 @@ router.delete('/:id', async (req, res) => {
     res.status(200).json({ message: 'Item deleted successfully', item });
   } catch (error) {
     console.error('Error deleting item:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Failed to delete item' });
   }
 });
 
-
 module.exports = router;
+

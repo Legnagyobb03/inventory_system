@@ -1,12 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const protectedRoute = require('./routes/protectedRoute');
 const userRoutes = require('./routes/users');
 const itemsRoutes = require('./routes/items');
-const mongoose = require('mongoose');
-
 
 const app = express();
 
@@ -23,7 +22,12 @@ app.use('/api/main', protectedRoute);
 app.use('/api/users', userRoutes);
 app.use('/api/items', itemsRoutes);
 
-
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
