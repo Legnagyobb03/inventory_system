@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useTheme } from './ThemeProvider';
 
 const Item = ({ item, onDelete, onEdit }) => {
+    const { isDarkMode } = useTheme();
+
     const handleDelete = async () => {
         if (window.confirm('Are you sure you want to delete this item?')) {
             try {
@@ -19,20 +22,20 @@ const Item = ({ item, onDelete, onEdit }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             whileHover={{ scale: 1.03 }}
-            className="bg-navyBlue rounded-lg shadow-lg p-6 transition-all duration-300"
+            className={`${isDarkMode ? 'bg-teal' : 'bg-white'} rounded-lg shadow-lg p-6 transition-all duration-300`}
         >
-            <h3 className="text-xl font-bold mb-2 text-skyBlue">{item.name}</h3>
-            <p className="text-white mb-3">{item.description}</p>
+            <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{item.name}</h3>
+            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-3`}>{item.description}</p>
             <div className="flex justify-between items-center mb-4">
-                <p className="text-lightTeal font-semibold">Quantity: {item.quantity}</p>
-                <p className="text-lightTeal font-semibold">Location: {item.location}</p>
+                <p className={`${isDarkMode ? 'text-white' : 'text-gray-800'} font-semibold`}>Quantity: {item.quantity}</p>
+                <p className={`${isDarkMode ? 'text-white' : 'text-gray-800'} font-semibold`}>Location: {item.location}</p>
             </div>
             <div className="flex justify-end space-x-2">
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => onEdit(item)}
-                    className="bg-teal text-white p-2 rounded-full hover:bg-lightTeal transition-colors duration-300"
+                    className="bg-yellow-500 text-white p-2 rounded-full hover:bg-yellow-600 transition-colors duration-300"
                 >
                     <FaEdit />
                 </motion.button>

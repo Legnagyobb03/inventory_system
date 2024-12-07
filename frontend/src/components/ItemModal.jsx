@@ -33,8 +33,8 @@ const ItemModal = ({ isOpen, onClose, onAddItem }) => {
     setError('');
     setIsLoading(true);
 
-    if (quantity <= 0) {
-      setError('Quantity must be greater than 0.');
+    if (quantity < 0) {
+      setError('Quantity cant be negative.');
       setIsLoading(false);
       return;
     }
@@ -103,13 +103,18 @@ const ItemModal = ({ isOpen, onClose, onAddItem }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                <input
-                  type="text"
+                <select
                   name="location"
                   value={location}
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                />
+                >
+                  <option value="undefined">Undefined</option>
+                  <option value="Section A">Section A</option>
+                  <option value="Section B">Section B</option>
+                  <option value="Section C">Section C</option>
+                  <option value="Section D">Section D</option>
+                </select>
               </div>
 
               {error && <p className="text-red-500 text-sm">{error}</p>}
