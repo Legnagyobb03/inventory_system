@@ -12,5 +12,5 @@ This is an inventory system project webapplication.
 7. on http://localhost:5173/login you can start using the application
  
 # Some more information
-- you can only acces the mongodb cloud database if you ipv4 number is on the list.
+- you can only acces the mongodb cloud database if your ipv4 number is on the list.
 
