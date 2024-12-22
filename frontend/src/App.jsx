@@ -17,7 +17,9 @@ function App() {
         <Route path="/" element={<PrivateRoute />}>
         <Route path="/main" element={<Main />} />
         <Route path="/mainAdmin" element={<MainAdmin />} />
+        
         </Route>
+        
       </Routes>
     </Router>
   );

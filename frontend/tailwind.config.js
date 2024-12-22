@@ -28,7 +28,9 @@ export default {
         teal: '#0A7075',
         lightTeal: '#0C969C',
         skyBlue: '#6BA3BE',
-        navyBlue: '#274D60',
+        navyBlue: '#4682B4',
+        extraGray:'#708090',
+        extraBlack:'#232B2B',
         background: {
           dark: '#032F30',
           light: '#F0F4F8',

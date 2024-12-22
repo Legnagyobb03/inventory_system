@@ -15,16 +15,25 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await api.post('/auth/login', { email, password });
-      const { token, role } = response.data;
+      const { token, user } = response.data;
+  
       localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
-      navigate(role === 'admin' ? '/mainAdmin' : '/main');
+      localStorage.setItem('userInfo', JSON.stringify({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }));
+      
+      navigate(user.role === 'admin' ? '/mainAdmin' : '/main');
     } catch (err) {
       setError(err.response?.data?.error || 'An error occurred during login');
     } finally {
       setIsLoading(false);
     }
   };
+  
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-navyBlue to-lightTeal flex items-center justify-center relative">
@@ -33,7 +42,7 @@ const Login = () => {
           Welcome Back!
         </h1>
         <p className="text-xl text-white opacity-80 mb-8">
-          Sign in to access your dashboard.
+          Sign in to access your inventory.
         </p>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
